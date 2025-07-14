@@ -1,69 +1,32 @@
-# React + TypeScript + Vite
+#testTaskOpenMeteo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Цель:
+Создать адаптивную React-страницу с тремя графиками истории температур в различных геолокациях. 
+Данные запрашивать из OpenMeteo API.
+Ссылка на api: https://open-meteo.com
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Требования
+Основное
+1. Использовать React, остальные библиотеки и инструменты по личному
+   усмотрению.
+2. Получать данные температур (почасовой прогноз) через OpenMeteo API.
+3. Вывести 3 разных местоположения на трех графиках(например: Амстердам,
+   НьюЙорк, Токио).
+4. Отобразить только температурные данные за последние 24 часа.
+   Опционально добавить возможность масштабировать график по временному
+   промежутку, от нескольких часов, до 7 дней, при масштабировании до дней
+   усреднять температуру за сутки.
+5. Реализовать адаптивность:
+   На широких экранах: 3 графика в ряд.
+   При сужении (&lt;768px): перестраиваются в вертикальный столбец.
+6. Визуально приятный, понятный дизайн.
+   Критерии оценки
+   Код организован, с чёткой структурой компонентов.
+   Обработка ошибок при неуспешном запросе к API.
+   Документация в README.
+   Публикация
+   Опубликовать проект на GitHub с:
+   Описанием задачи
+   Используемым стеком
+   Инструкцией запуска
+   Прислать ссылку на репозиторий.
