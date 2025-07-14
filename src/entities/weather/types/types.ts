@@ -1,14 +1,15 @@
 import type { Coordinates } from '@shared/types/types.ts';
 
 export type GetWeatherParams = {
-  hourly: 'temperature_2m';
+  hourly?: 'temperature_2m';
+  daily?: 'temperature_2m_mean';
   forecast_days: number;
-  timezone: string;
+  timezone: 'auto';
 } & Coordinates;
 
-export type WeatherHourlyResult = {
-  hourly: {
+export type WeatherResult = {
+  data: {
     time: Array<Date>;
-    temperature2m: Float32Array<ArrayBufferLike>;
+    temperature: Float32Array<ArrayBufferLike>;
   };
 };

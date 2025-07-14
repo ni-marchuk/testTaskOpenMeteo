@@ -1,56 +1,45 @@
 import {type FC, useState} from 'react';
-import type {GetWeatherParams} from '@entities/weather/types/types.ts';
-import {useChartWeatherQuery} from '@entities/weather/queries/queries.ts';
+import {useChartWeatherDataQuery} from '@entities/weather/queries/queries.ts';
 import {COORDS_BY_CITY} from '@shared/constants/constants.ts';
-import {CityLineChart} from "@features/CityLineChart/CityLineChart.tsx";
-
-const defaultWeatherParams: Pick<GetWeatherParams, 'hourly' | 'timezone'> = {
-    hourly: 'temperature_2m',
-    timezone: 'auto',
-};
+import {CityLineChart, type CityLineChartProps} from "@features/CityLineChart/CityLineChart.tsx";
 
 export const ChartsWidget: FC = () => {
-    const [forecastDays, _setForecastDays] = useState<number>(1)
+    const [newYorkParams, setNewYorkParams] = useState<CityLineChartProps['params']>({
+        timezone: 'auto',
+        hourly: 'temperature_2m',
+        forecast_days: 1,
+        ...COORDS_BY_CITY.NEW_YORK
+    })
 
     const {
         data: newYorkData,
         isLoading: newYorkIsLoading,
         isError: newYorkIsError,
         error: newYorkError,
-    } = useChartWeatherQuery({
-        ...defaultWeatherParams,
-        ...COORDS_BY_CITY.NEW_YORK,
-        chartLabel: 'New York',
-        forecast_days: forecastDays,
-    });
-
-    const {
-        data: amsterdamData,
-        isLoading: amsterdamIsLoading,
-        isError: amsterdamIsError,
-        error: amsterdamError,
-    } = useChartWeatherQuery({
-        ...defaultWeatherParams,
-        ...COORDS_BY_CITY.NEW_YORK,
-        chartLabel: 'Amsterdam',
-        forecast_days: forecastDays,
+    } = useChartWeatherDataQuery({
+        ...newYorkParams,
     });
 
     return (
         <div className='row'>
             <CityLineChart
                 city='New York'
-                data={newYorkData}
+                data={{
+                    labels: newYorkData?.labels ?? [],
+                    datasets: [
+                        {
+                            data: newYorkData?.data ?? [],
+                            label: 'New York ° ',
+                            borderColor: 'rgb(53, 162, 235)',
+                            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                        }
+                    ]
+                }}
                 isLoading={newYorkIsLoading}
                 isError={newYorkIsError}
                 error={newYorkError}
-            />
-            <CityLineChart
-                city='Amsterdam'
-                data={amsterdamData}
-                isLoading={amsterdamIsLoading}
-                isError={amsterdamIsError}
-                error={amsterdamError}
+                params={newYorkParams}
+                setChartParams={setNewYorkParams}
             />
         </div>
     );
