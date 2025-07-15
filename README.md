@@ -33,11 +33,13 @@
    Прислать ссылку на репозиторий.
 
 Используемый стек:
+- Архитектура проетка
+https://feature-sliced.design/
 - Разработка
 React, React-Router v6, Typescript, Vite
 - Данные
-Получение данных - openmeteo
-Работа с состоянием - tanstack/react-query,
+* Получение данных - openmeteo
+* Работа с состоянием - tanstack/react-query,
 - Графики 
 Chart.js
 - Проверка кода
