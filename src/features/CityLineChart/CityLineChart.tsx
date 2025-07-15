@@ -2,6 +2,7 @@ import { type FC } from 'react';
 import type { ChartData } from 'chart.js';
 import { CityLineChartSkeleton } from '@features/CityLineChart/CityLineChartSkeleton.tsx';
 import { CityLineChartError } from '@features/CityLineChart/CityLineChartError.tsx';
+import { getChartOptions } from '@features/CityLineChart/helpers.ts';
 import { Typography } from '@shared/ui/Typography/Typography.tsx';
 import { Button } from '@shared/ui/Button/Button.tsx';
 import { LineChart } from '@shared/ui/LineChart/LineChart.tsx';
@@ -100,7 +101,7 @@ export const CityLineChart: FC<CityLineChartProps> = ({
           </Button>
         </div>
         <div className="relative w-full h-64">
-          <LineChart data={data} />
+          <LineChart data={data} options={getChartOptions(data)} />
         </div>
       </div>
     );

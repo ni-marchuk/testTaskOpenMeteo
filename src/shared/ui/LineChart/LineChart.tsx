@@ -24,33 +24,15 @@ ChartJS.register(
   // Legend,
 );
 
-const DefaultLineChartOptions: ChartOptions<'line'> = {
-  responsive: true,
-  maintainAspectRatio: false,
-};
-
 type LineChartProps = {
   data: ChartData<'line', number[], string>;
+  options?: ChartOptions<'line'>;
 };
 
-export const LineChart: FC<LineChartProps> = ({ data }) => {
+export const LineChart: FC<LineChartProps> = ({ data, options }) => {
   return (
     <Line
-      options={{
-        scales: {
-          y: {
-            suggestedMin: Math.min(...data.datasets[0].data) - 5,
-            suggestedMax: Math.max(...data.datasets[0].data) + 5,
-          },
-          x: {
-            offset: true,
-            ticks: {
-              font: { size: 10 },
-            },
-          },
-        },
-        ...DefaultLineChartOptions
-      }}
+      options={options}
       data={data}
     />
   );
