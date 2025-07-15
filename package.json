@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "test": "vitest",
-    "deploy": "vite build && vite-plugin-gh-pages"
+    "deploy": "npm run build && vite --config vite.config.ts --mode production"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",

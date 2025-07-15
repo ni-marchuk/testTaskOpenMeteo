@@ -6,7 +6,7 @@ import { HomePage } from '@pages/Home.tsx';
 export const App: FC = () => {
   return (
     <TanstackReactQueryProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/testTaskOpenMeteo/">
         <Routes>
           <Route path="/" element={<HomePage />} />
         </Routes>
