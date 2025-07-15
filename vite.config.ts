@@ -5,6 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+    base: '/testTaskOpenMeteo/',
     plugins: [react(), tsconfigPaths(), tailwindcss()],
     test: {
         globals: true,
