@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getWeather } from '@entities/weather/services/services.ts';
 import type { GetWeatherParams } from '@entities/weather/types/types.ts';
 
-type ChartWeatherQueryResult = {
+export type ChartWeatherQueryResult = {
   labels: Array<string>;
   data: Array<number>;
 };
@@ -12,6 +12,10 @@ export const useChartWeatherDataQuery = (queryParams: GetWeatherParams) => {
     queryKey: ['getWeatherNewYork', queryParams],
     queryFn: async (): Promise<ChartWeatherQueryResult> => {
       const result = await getWeather(queryParams);
+      console.log({
+        labels: result.data.time,
+        data: result.data.temperature,
+      });
       return {
         labels: result.data.time,
         data: result.data.temperature,
