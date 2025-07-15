@@ -1,111 +1,107 @@
-import {type FC} from 'react';
-import type {ChartData} from "chart.js";
-import {type ChartOptions} from 'chart.js';
-import {Line} from 'react-chartjs-2';
-
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Filler,
-    Legend,
-} from 'chart.js';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Filler,
-    Legend,
-);
-
-const DefaultLineChartOptions: ChartOptions<'line'> = {
-    responsive: true,
-    plugins: {
-        legend: {
-            position: 'top' as const,
-        },
-    }
-};
+import { type FC } from 'react';
+import type { ChartData } from 'chart.js';
+import { CityLineChartSkeleton } from '@features/CityLineChart/CityLineChartSkeleton.tsx';
+import { CityLineChartError } from '@features/CityLineChart/CityLineChartError.tsx';
+import { Typography } from '@shared/ui/Typography/Typography.tsx';
+import { Button } from '@shared/ui/Button/Button.tsx';
+import { LineChart } from '@shared/ui/LineChart/LineChart.tsx';
 
 type ChartParams = {
-    hourly?: 'temperature_2m';
-    daily?: 'temperature_2m_mean';
-    timezone: 'auto';
-    forecast_days: number;
-    latitude: number;
-    longitude: number;
-}
+  hourly?: 'temperature_2m';
+  daily?: 'temperature_2m_mean';
+  timezone: 'auto';
+  forecast_days: number;
+  latitude: number;
+  longitude: number;
+};
 
 export type CityLineChartProps = {
-    city: string
-    data?: ChartData<'line', number[], string>
-    isLoading: boolean,
-    isError: boolean,
-    error: Error | null,
-    params: ChartParams,
-    setChartParams: (params: ChartParams) => void
-}
+  city: string;
+  data?: ChartData<'line', number[], string>;
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+  params: ChartParams;
+  setChartParams: (params: ChartParams) => void;
+};
 
 export const CityLineChart: FC<CityLineChartProps> = ({
-                                                          city,
-                                                          isLoading,
-                                                          isError,
-                                                          error,
-                                                          data,
-                                                          params,
-                                                          setChartParams
+                                                        city,
+                                                        isLoading,
+                                                        isError,
+                                                        error,
+                                                        data,
+                                                        params,
+                                                        setChartParams,
                                                       }) => {
+  if (isLoading) {
+    return <CityLineChartSkeleton />;
+  }
 
-    if (isLoading) return <div>{city} Loading...</div>;
-    if (isError) return <div>{error?.message ?? 'Ошибка загрузки погоды ' + city}</div>;
+  if (isError) {
+    console.error(error?.message);
+    return <CityLineChartError city={city} />;
+  }
 
-    const handleChatParams = (days: number) => {
-        const newParams = {...params};
-        if (days > 1) {
-            delete newParams['hourly']
-            newParams['daily'] = 'temperature_2m_mean';
-        } else {
-            delete newParams['daily']
-            newParams['hourly'] = 'temperature_2m';
-        }
-        newParams['forecast_days'] = days;
-        setChartParams(newParams);
+  const handleChatParams = (days: number) => {
+    const newParams = { ...params };
+    if (days > 1) {
+      delete newParams['hourly'];
+      newParams['daily'] = 'temperature_2m_mean';
+    } else {
+      delete newParams['daily'];
+      newParams['hourly'] = 'temperature_2m';
     }
+    newParams['forecast_days'] = days;
+    setChartParams(newParams);
+  };
 
-    if (data) return (
-        <div>
-            <h2>Сегодня</h2>
-            <button onClick={() => handleChatParams(1)}>За сегодня</button>
-            <h2>По дням</h2>
-            <button onClick={() => handleChatParams(2)}>Средняя за 2 дня</button>
-            <button onClick={() => handleChatParams(3)}>Средняя за 3 дня</button>
-            <button onClick={() => handleChatParams(4)}>Средняя за 4 дня</button>
-            <button onClick={() => handleChatParams(5)}>Средняя за 5 дней</button>
-            <button onClick={() => handleChatParams(6)}>Средняя за 6 дней</button>
-            <button onClick={() => handleChatParams(7)}>Средняя за 7 дней</button>
-            <Line
-                options={{
-                    scales: {
-                        y: {
-                            suggestedMin: Math.min(...data.datasets[0].data) - 5,
-                            suggestedMax: Math.max(...data.datasets[0].data) + 5,
-                        },
-                        x: {
-                            offset: true,
-                        },
-                    },
-                    ...DefaultLineChartOptions,
-                }}
-                data={data}
-            />
+  if (data)
+    return (
+      <div className="size-full p-4 border-2 border-solid border-slate-600 rounded-xl">
+        <Typography as="h2" variant="h2" className="mb-4 text-neutral-700">{city}</Typography>
+        <div className="flex flex-wrap gap-1 mb-4">
+          <Button onClick={() => handleChatParams(1)} disabled={params.forecast_days === 1}>За сегодня</Button>
+          <Button
+            onClick={() => handleChatParams(2)}
+            disabled={params.forecast_days === 2}
+          >
+            2 дня
+          </Button>
+          <Button
+            onClick={() => handleChatParams(3)}
+            disabled={params.forecast_days === 3}
+          >
+            3 дня
+          </Button>
+          <Button
+            onClick={() => handleChatParams(4)}
+            disabled={params.forecast_days === 4}
+          >
+            4 дня
+          </Button>
+          <Button
+            onClick={() => handleChatParams(5)}
+            disabled={params.forecast_days === 5}
+          >
+            5 дней
+          </Button>
+          <Button
+            onClick={() => handleChatParams(6)}
+            disabled={params.forecast_days === 6}
+          >
+            6 дней
+          </Button>
+          <Button
+            onClick={() => handleChatParams(7)}
+            disabled={params.forecast_days === 7}
+          >
+            7 дней
+          </Button>
         </div>
-    )
+        <div className="relative w-full h-64">
+          <LineChart data={data} />
+        </div>
+      </div>
+    );
 };
