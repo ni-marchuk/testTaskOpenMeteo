@@ -12,15 +12,12 @@ export const useChartWeatherDataQuery = (queryParams: GetWeatherParams) => {
     queryKey: ['getWeatherNewYork', queryParams],
     queryFn: async (): Promise<ChartWeatherQueryResult> => {
       const result = await getWeather(queryParams);
-      console.log({
-        labels: result.data.time,
-        data: result.data.temperature,
-      });
       return {
         labels: result.data.time,
         data: result.data.temperature,
       };
     },
     retry: 1,
+    networkMode: 'always'
   });
 };
