@@ -1,5 +1,11 @@
-import type { ChartData, ChartOptions } from 'chart.js';
 import type { FC } from 'react';
+import type { ChartData, ChartOptions } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import 'chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+dayjs.locale('ru');
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +15,9 @@ import {
   Title,
   Tooltip,
   Filler,
-  // Legend,
+  TimeScale,
+  Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
@@ -21,12 +27,13 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  // Legend,
+  TimeScale,
+  Legend,
 );
 
 type LineChartProps = {
-  data: ChartData<'line', number[], string>;
-  options?: ChartOptions<'line'>;
+  data: ChartData<'line', number[], Date>;
+  options?: ChartOptions<'line'>
 };
 
 export const LineChart: FC<LineChartProps> = ({ data, options }) => {

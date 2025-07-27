@@ -18,7 +18,7 @@ type ChartParams = {
 
 export type CityLineChartProps = {
   city: string;
-  data?: ChartData<'line', number[], string>;
+  data?: ChartData<'line', number[], Date>;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;

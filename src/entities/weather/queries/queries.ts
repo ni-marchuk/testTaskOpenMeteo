@@ -3,7 +3,7 @@ import { getWeather } from '@entities/weather/services/services.ts';
 import type { GetWeatherParams } from '@entities/weather/types/types.ts';
 
 export type ChartWeatherQueryResult = {
-  labels: Array<string>;
+  labels: Array<Date>;
   data: Array<number>;
 };
 

@@ -9,7 +9,7 @@ export type GetWeatherParams = {
 
 export type WeatherResult = {
   data: {
-    time: Array<string>;
+    time: Array<Date>;
     temperature: Array<number>;
   };
 };

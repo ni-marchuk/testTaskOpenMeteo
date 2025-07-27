@@ -1,7 +1,7 @@
-import type { ChartData } from 'chart.js';
+import type { ChartData, ChartOptions } from 'chart.js';
 
 /** данный хелпер служит для более приятных визуальных настроек графика */
-export const getChartOptions = (data: ChartData<'line', number[], string>) => {
+export const getChartOptions = (data: ChartData<'line', number[], Date>): ChartOptions<'line'> => {
   return {
     scales: {
       y: {
@@ -9,9 +9,23 @@ export const getChartOptions = (data: ChartData<'line', number[], string>) => {
         suggestedMax: Math.max(...data.datasets[0].data) + 5,
       },
       x: {
+        type: 'time',
         offset: true,
         ticks: {
           font: { size: 10 },
+        },
+        time: {
+          tooltipFormat: 'D MMM HH:mm',  // локализованный формат
+          displayFormats: {
+            minute: 'HH:mm',
+            hour: 'D MMM HH:mm',
+            day: 'D MMM',
+            month: 'MMM YYYY',
+          },
+        },
+        title: {
+          display: true,
+          text: 'Дата',
         },
       },
     },
